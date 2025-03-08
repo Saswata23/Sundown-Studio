@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up | Sundown Studio</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: url("./space-solar-system-planet-sun-wallpaper.jpg")
+          no-repeat center center/cover;
+      }
+      .container {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        text-align: center;
+        width: 400px;
+      }
+      h2 {
+        color: white;
+        margin-bottom: 20px;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        outline: none;
+      }
+      input::placeholder {
+        color: #ddd;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #ff9800;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 15px;
+      }
+      button:hover {
+        background-color: #e68900;
+      }
+      a {
+        color: #ff9800;
+        text-decoration: none;
+      }
+      .register {
+        margin-top: 10px;
+        color: white;
+        font-size: 14px;
+      }
+      .alert-box {
+        display: none;
+        background: rgba(255, 0, 0, 0.8);
+        color: white;
+        padding: 12px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 600;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 0, 0, 0.5);
+        animation: fadeIn 0.3s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector("form").addEventListener("submit", function(event) {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm_password").value;
+            var alertBox = document.getElementById("alert-box");
+            
+            if (password !== confirmPassword) {
+                event.preventDefault(); // Prevent form submission
+                alertBox.innerText = "Passwords do not match!";
+                alertBox.style.display = "block";
+
+                // Hide the alert after 3 seconds
+                setTimeout(function() {
+                    alertBox.style.display = "none";
+                }, 3000);
+            }
+        });
+    });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Sign Up</h2>
+      <div id="alert-box" class="alert-box"></div>
+
+      <form action="/signup" method="POST" onsubmit="validateForm(event)">
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+        <input
+          type="password"
+          id="confirm_password"
+          name="confirm_password"
+          placeholder="Confirm Password"
+          required
+        />
+        <button type="submit">Sign Up</button>
+      </form>
+      <p class="register">
+        Already have an account? <a href="/login">Login</a>
+      </p>
+    </div>
+  </body>
+</html>

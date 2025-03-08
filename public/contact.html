@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Sundown Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        body {
+            background-color: antiquewhite;
+            color: #222;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background:linear-gradient(to right,antiquewhite,white,antiquewhite);
+            backdrop-filter: blur(50px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 600;
+            margin: 0 15px;
+        }
+        .contact-section {
+            text-align: center;
+            margin-top: 120px;
+        }
+        .contact-section h1 {
+            font-size: 40px;
+            font-weight: 700;
+        }
+        .contact-section p {
+            font-size: 16px;
+            color: #666;
+            margin: 10px 0 30px;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: auto;
+            background: antiquewhite;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.575);
+        }
+        .form-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: black;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 1vh;
+        }
+        button:hover {
+            background: linear-gradient(to right, white, black);
+            color: black;
+            font-weight: bold;
+        }
+        /* Styled Alert */
+        .alert {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #28a745;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            font-weight: 600;
+            animation: fadeInOut 4s ease-in-out;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+            10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <img src="./64d3dd9edfb41666c35b15c2_Sundown logo.svg" alt="">
+        <div class="nav-links">
+            <a href="./sundown_auth.html">Home</a>
+            <a href="./work.html">Work</a>
+            <a href="./studio.html">Studio</a>
+            <a href="./contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <div class="contact-section">
+        <h1>Let's talk about <br> your project</h1>
+        <p>Drop us a line through the form below and we'll get back to you.</p>
+        <div class="form-container">
+            <form id="contact-form">
+                <div class="form-group">
+                    <input type="text" placeholder="First Name" id="first-name" required>
+                    <input type="text" placeholder="Last Name" id="last-name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address" id="email" required>
+                    <input type="text" placeholder="Company Name" id="company" required>
+                </div>
+                <textarea rows="5" placeholder="Tell us about your goals..." id="message" required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="alert-box" class="alert"></div>
+
+    <script>
+        document.getElementById("contact-form").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            const formData = {
+                firstName: document.getElementById("first-name").value,
+                lastName: document.getElementById("last-name").value,
+                email: document.getElementById("email").value,
+                company: document.getElementById("company").value,
+                message: document.getElementById("message").value
+            };
+
+            try {
+                const response = await fetch("/api/contact", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+                showAlert(result.message, result.success);
+                if (result.success) {
+                    document.getElementById("contact-form").reset(); // Clear form after success
+                }
+            } catch (error) {
+                showAlert("Something went wrong! Please try again.", false);
+            }
+        });
+
+        function showAlert(message, success) {
+            const alertBox = document.getElementById("alert-box");
+            alertBox.textContent = message;
+            alertBox.style.backgroundColor = success ? "#28a745" : "#dc3545"; // Green for success, Red for error
+            alertBox.style.display = "block";
+
+            setTimeout(() => {
+                alertBox.style.display = "none";
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
