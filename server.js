@@ -50,11 +50,24 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // Allows server to parse JSON data
 
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(session({
+//     secret: process.env.SESSION_SECRET, 
+//     resave: false,
+//     saveUninitialized: true
+// }));
 app.use(session({
-    secret: process.env.SESSION_SECRET, 
+    secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', // Make sure this is true for HTTPS in production
+        maxAge: 24 * 60 * 60 * 1000, // Session expires in 24 hours
+        sameSite: 'None', // For cross-origin requests
+    }
 }));
+
+
 
 // Landing Page (Signup/Login Options)
 app.get('/', (req, res) => {
@@ -108,6 +121,7 @@ app.post('/login', async (req, res) => {
 
 // Protected Main Sundown Studio Site
 app.get('/main', (req, res) => {
+    console.log(req.session);
     if (!req.session.user) return res.redirect('/login');
     res.sendFile(path.join(__dirname, 'public', 'sundown_auth.html')); // Your actual website file
 });
