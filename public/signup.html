@@ -97,7 +97,7 @@
         }
       }
     </style>
-    <script>
+    <!-- <script>
     document.addEventListener("DOMContentLoaded", function() {
         document.querySelector("form").addEventListener("submit", function(event) {
             var password = document.getElementById("password").value;
@@ -116,7 +116,58 @@
             }
         });
     });
-    </script>
+    </script> --> 
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector("form").addEventListener("submit", async function (event) {
+      var password = document.getElementById("password").value;
+      var confirmPassword = document.getElementById("confirm_password").value;
+      var alertBox = document.getElementById("alert-box");
+
+      // Password validation
+      if (password !== confirmPassword) {
+        event.preventDefault(); // Prevent form submission
+        alertBox.innerText = "Passwords do not match!";
+        alertBox.style.display = "block";
+
+        // Hide the alert after 3 seconds
+        setTimeout(function () {
+          alertBox.style.display = "none";
+        }, 3000);
+      } else {
+        // Proceed with the signup request
+        const username = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+
+        const response = await fetch("https://sundown-studio-owrt.onrender.com/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username,
+            email,
+            password,
+            confirm_password: confirmPassword,
+          }),
+          credentials: "include", // Important for handling session cookies
+        });
+
+        const result = await response.json();
+
+        if (!result.success) {
+          alertBox.innerText = result.message || "Error occurred!";
+          alertBox.style.display = "block";
+        } else {
+          alertBox.innerText = "Signup successful! Redirecting...";
+          alertBox.style.display = "block";
+          setTimeout(function () {
+            window.location.href = "/login"; // Redirect to login after success
+          }, 1500);
+        }
+      }
+    });
+  });
+</script>
+
   </head>
   <body>
     <div class="container">
