@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+body {
+    background: url('./solar_2-wallpaper-1920x1080.jpg') no-repeat center center/cover;
+    color: #fff;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: 700;
+    background: linear-gradient(to right,white,orange);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
+}
+
+.navbar ul {
+    display: flex;
+    list-style: none;
+}
+
+.navbar ul li {
+    margin-left: 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: 0.3s;
+    font-family: 'Times New Roman', Times, serif;
+    font-size:large;
+}
+
+.navbar ul li a:hover {
+    color: #ff9900;
+}
+
+.btn-dark, .btn-light {
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size: 1rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+  
+   
+}
+
+.btn-dark {
+    background: #ff9900;
+    color: #000;
+}
+
+.btn-dark:hover {
+    background:black;
+}
+
+.btn-light {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: #fff;
+    font-weight: bold;
+}
+
+.btn-light:hover {
+    background: white;
+    color: #000;
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    text-align: center;
+    position: relative;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.2;
+    position: relative;
+    margin-top: 10vh;
+}
+
+.hero-content h1 span {
+    color: #ff9900;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
+
+/* Base styles (already assumed to be present) */
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .navbar .logo {
+        margin-bottom: 10px;
+    }
+
+    .navbar nav ul {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .navbar nav ul li {
+        display: block;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .navbar nav ul {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center; /* Center items horizontally */
+        justify-content: center;
+    }
+
+    .hero {
+        text-align: center;
+        padding: 50px 20px;
+    }
+
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+
+    .btn-light {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero-content p {
+        font-size: 0.85rem;
+    }
+
+    .btn-light {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+
+    .navbar .logo {
+        font-size: 1.2rem;
+    }
+
+    .navbar nav ul {
+        gap: 8px;
+    }
+}

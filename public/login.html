@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Sundown Studio</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: url("./space-solar-system-planet-sun-wallpaper.jpg ")
+          no-repeat center center/cover;
+      }
+      .container {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        text-align: center;
+        width: 350px;
+      }
+      h2 {
+        color: white;
+        margin-bottom: 20px;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        outline: none;
+      }
+      input::placeholder {
+        color: #ddd;
+      }
+      .checkbox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+        font-size: 14px;
+        margin-top: 10px;
+      }
+      .checkbox label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        white-space: nowrap;
+      }
+      .checkbox input {
+        margin-right: 5px;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #ff9800;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 15px;
+      }
+      button:hover {
+        background-color: #e68900;
+      }
+      a {
+        color: #ff9800;
+        text-decoration: none;
+      }
+      .register {
+        margin-top: 10px;
+        color: white;
+        font-size: 14px;
+      }
+
+      .alert {
+        position: fixed;
+        top: 20px; /* Adjust this to move the alert up or down */
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 15px 25px;
+        border-radius: 8px;
+        font-size: 18px;
+        color: white;
+        font-weight: bold;
+        z-index: 1000;
+        text-align: center;
+        min-width: 250px;
+        animation: fadeInOut 3s ease-in-out;
+      }
+
+      .alert.success {
+        background-color: #4caf50;
+      } /* Green for success */
+      .alert.error {
+        background-color: #f44336;
+      } /* Red for error */
+
+      @keyframes fadeInOut {
+        0% {
+          opacity: 0;
+          transform: translateX(-50%) translateY(-20px);
+        }
+        10% {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translateX(-50%) translateY(-20px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Login</h2>
+
+      <div id="alert" class="alert"></div>
+
+      <form id="login-form" action="/login" method="POST">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
+          required
+        />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+        <div class="checkbox">
+          <label><input type="checkbox" />Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      <p class="register">
+        Don't have an account? <a href="/signup">Sign Up</a>
+      </p>
+    </div>
+    <script>
+        document
+          .getElementById("login-form")
+          .addEventListener("submit", async function (event) {
+            event.preventDefault(); // Prevent form from reloading the page
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            const response = await fetch("/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, password }),
+            });
+
+            const result = await response.json();
+
+            if (!result.success) {
+              showAlert(result.message, "error");
+            } else {
+              showAlert(result.message, "success");
+              setTimeout(() => {
+                window.location.href = "/main"; // Redirect after success
+              }, 1500);
+            }
+          });
+
+        // Function to show a stylish alert
+        function showAlert(message, type) {
+          const alertBox = document.createElement("div");
+          alertBox.className = `alert ${type}`;
+          alertBox.textContent = message;
+          document.body.appendChild(alertBox);
+
+          setTimeout(() => {
+            alertBox.remove();
+          }, 3000);
+        }
+
+      
+    </script>
+  </body>
+</html>
