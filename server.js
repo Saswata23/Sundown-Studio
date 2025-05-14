@@ -7,6 +7,17 @@ const path = require('path');
 require('dotenv').config();
 const app = express();
 
+const cors = require('cors');
+
+const corsOptions = {
+    origin: "https://frontend-navy-gamma-56.vercel.app",
+    methods: ["GET", "POST"],
+    credentials: true
+};
+
+app.use(cors(corsOptions));
+
+
 // MongoDB Connection
 const mongoURI = process.env.MONGODB_URI; // Access MongoDB URI from .env
 mongoose.connect(mongoURI, {
