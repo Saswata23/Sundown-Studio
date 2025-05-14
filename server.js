@@ -4,10 +4,12 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const path = require('path');
+require('dotenv').config();
 const app = express();
 
 // MongoDB Connection
-mongoose.connect('mongodb+srv://admin:mangodbsaswat@cluster0.1qh5d.mongodb.net/sundown_auth?retryWrites=true&w=majority&appName=Cluster0', {
+const mongoURI = process.env.MONGODB_URI; // Access MongoDB URI from .env
+mongoose.connect(mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
@@ -38,7 +40,7 @@ app.use(express.json()); // Allows server to parse JSON data
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-    secret: 'sundownSecret',
+    secret: process.env.SESSION_SECRET, 
     resave: false,
     saveUninitialized: true
 }));
